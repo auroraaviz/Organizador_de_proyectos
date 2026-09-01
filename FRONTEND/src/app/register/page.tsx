@@ -38,41 +38,64 @@ export default function RegisterPage() {
         }
 
         return (
-            <div style={{ maxWidth: "360px", margin: "80px auto", padding: "24px" }}>
-                <h1 style={{ fontSize: "24px", marginBottom: "24px" }}>Crear cuenta</h1>
+            <div className="min-h-screen flex items-center justify-center px-4">
+                <div className="w-full max-w-sm">
+                    <div className="mb-8 text-center">
+                        <div className="inline-flex items-center gap-2 mb-2">
+                            <span className="w-2 h-2 rounded-full bg-secondary" />
+                            <span className="w-2 h-2 rounded-full bg-primary-dark" />
+                            <span className="w-2 h-2 rounded-full bg-primary" />
+                        </div>
+                        <h1 className="text-3xl font-display font-semibold text-ink"> Crear cuenta </h1>
+                        <p className="text-sm text-ink/60 mt-1"> Sigue el progreso de tu proyecto </p>
+                    </div>
 
-                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                    <input
-                        type="text"
-                        placeholder="Usuario"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                        style={{ padding: "10px", fontSize: "14px" }}
-                        />
-                    <input
-                        type="password"
-                        placeholder="Contraseña"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        style={{ padding: "10px", fontSize: "14px" }}
-                        />
+                    <form 
+                        onSubmit={handleSubmit}
+                        className="bg-white/60 border border-border rounded-2x1 p-6 flex flex-col gap-4"
+                        >
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-xs font-medium text-ink/70"> Usuario </label>
+                                <input
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    required
+                                    className="px-3 py-2.5 rounded-lg border border-border bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
+                            </div>
 
-                    {error && <p style={{ color: "red", fontSize: "13px" }}>{error}</p>}
+                            <div className="flex flex-col gap-1.5">
+                                <label className="text-xs font-medium text-ink/70"> Contraseña </label>
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    className="px-3 py-2.5 rounded-lg border border-border bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary/40" />
+                            </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{ padding: "10px", fontSize: "14px", cursor: "pointer" }}
-        >
-          {loading ? "Creando..." : "Registrarse"}
-        </button>
-      </form>
+                            {error && (
+                                <p className="text-xs text-primary-dark bg-primary/10 rounded-lg px-3 py-2">
+                                    {error}
+                                </p>
+                            )}
 
-      <p style={{ marginTop: "16px", fontSize: "13px" }}>
-        ¿Ya tienes cuenta? <Link href="/login">Inicia sesión</Link>
-      </p>
-    </div>
-  );
-}
+                            <button 
+                                type="submit"
+                                disabled={loading}
+                                className="mt-2 py-2.5 rounded-lg bg-primary text-paper text-sm font-medium hover:bg-primary-dark transition-colors disabled:opacity-60">
+                                    {loading ? "Creando..." : "Registrarse"}
+                                </button>
+                        </form>
+
+                        <p className="mt-5 text-center text-sm text-ink/60">
+                            ¿Ya tienes cuenta? {" "}
+                        <Link href="/login" className="text-primary font-medium hover:underline">
+                            Iniciar sesión
+                        </Link>
+                        </p>
+                </div>
+            </div>
+        );
+    }
+

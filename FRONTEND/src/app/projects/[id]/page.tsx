@@ -58,6 +58,12 @@ async function getPhases(id: string): Promise<Phase[]> {
     return res.json();
 }
 
+const sizeLabels: Record<Project["size"], string> = {
+    SMALL: "Pequeño",
+    MEDIUM: "Mediano",
+    LARGE: "Grande",
+};
+
 export default async function ProjectDetailPage({
     params,
 }: {
@@ -65,40 +71,70 @@ export default async function ProjectDetailPage({
 }) {
     const { id } = await params;
     const [project, phases] = await Promise.all([getProject(id), getPhases(id)]);
+    const sortedPhases = [...phases].sort((a, b) => a.orderNumber - b.orderNumber);
 
     return (
-        <main style={{ padding: "40px", fontFamily: "sans-serif" }}>
-            <Link href="/" style={{ fontSize: "14px", color: "#666" }}>
-            Volver
-            </Link>
+        <main className="min-h-screen px-6 py-10 md:px-12">
+            <div className="max-w-2xl mx-auto">
+                <Link href="/" className="text-sm text-ink/60 hover:text-primary transition-colors">
+                Volver
+                </Link>
 
-            <h1 style={{ fontSize: "28px", margin: "16px 0 4px" }}>{project.title}</h1>
-            <p style={{ color: "#666", marginBottom: "24px" }}>
-                Tamaño: {project.size} Progreso: {project.progress}%
-            </p>
-
-            <h2 style={{ fontSize: "20px", marginBottom: "12px" }}>Fases</h2>
-
-            {phases.length === 0 ? (
-                <p style={{ color: "#999" }}> Este proyecto aún no tiene fases.</p>
-            ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "24px" }}>
-                    {phases
-                    .sort((a,b) => a.orderNumber - b.orderNumber)
-                    .map((phase) => (
-                        <div
-                        key={phase.id}
-                        style={{ border: "1px solid #eee", borderRadius: "6px", padding: "12px" }}
-                        >
-                            <strong>{phase.orderNumber}. {phase.name}</strong>
-                            <p style={{ margin: "4px 0 0", color: "#666", fontSize: "13px" }}>
-                                Progreso: {phase.progress}% · Peso: {phase.weight} · Fecha límite: {phase.dueDate ?? "sin definir"}
-                            </p>
+                <div className="mt-4 mb-8">
+                    <h1 className="text-2xl font-display font-semibold text-ink">{project.title}</h1>
+                    <p className="text-sm text-ink/60 mt-1 font-mono">
+                        {sizeLabels[project.size]} · {project.progress}% recorrido
+                    </p>
                 </div>
-            ))}
-        </div>
-    )}
-    <AddPhaseForm projectId={project.id} />
+
+                <h2 className="text-lg font-display font-semibold text-ink mb-4"> Fases del proyecto </h2>
+                
+                {sortedPhases.length === 0 ? (
+                    <p className="text-sm text-ink/50 mb-8"> Este proyecto aún no tiene fases </p>
+                ) : ( 
+                    <div className="mb-8">
+                        {sortedPhases.map((phase, index) => {
+                            const done = phase.progress >= 100;
+                            const isLast = index === sortedPhases.length - 1;
+                            return (
+                                <div key={phase.id} className="relative pl-8 pb-6 last:pb-0">
+                                    {!isLast && (
+                                        <span 
+                                        className={`absolute left-[7px] top-4 w-0.5 h-full ${
+                                            done ? "bg-primary" : "bg-border"
+                                        }`}
+                                        />
+                                    )}
+                                    <span
+                                    className={`absolute left-0 top-1 w-4 h-4 rounded-full border-2 ${
+                                        done
+                                        ? "bg-primary border-primary"
+                                        : "bg-paper border-secondary"
+                                    }`}
+                                    />
+                                    <div className="bg-white/60 border border-border rounded-xl p-4">
+                                        <div className="flex items-center justify-between gap-3">
+                                            <h3 className="font-medium text-ink">
+                                                {phase.orderNumber}. {phase.name}
+                                            </h3>
+                                            <span className="text-xs font-mono text-ink/60 whitespace-nowrap">
+                                            {phase.progress}%
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-ink/50 mt-1.5 font-mono">
+                                        Peso {phase.weight} · {phase.dueDate ?? "sin fecha límite"}
+                                        </p>
+                                    </div>
+                               </div>
+                            );
+                        })}
+                  </div>
+                )}
+ 
+                <div className="bg-white/60 border border-border rounded-2xl p-5">
+                    <AddPhaseForm projectId={project.id} />
+                </div>
+            </div>
         </main>
     );
-}
+} 

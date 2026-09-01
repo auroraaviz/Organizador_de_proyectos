@@ -37,45 +37,58 @@ async function handleSubmit(e: React.FormEvent) {
 
 return (
     <form
-    onSubmit={handleSubmit}
-    style={{ display: "flex", flexDirection: "column", gap: "8px", maxWidth: "320px" }}
-    >
-        <h3 style={{ fontSize: "16px", margin: "0 0 4px" }}> Nueva fase </h3>
+    onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <h3 className="text-sm font-medium text-ink"> Añadir nueva fase </h3>
+    
         <input
             type="text"
             placeholder="Nombre de la fase"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            style={{ padding: "8px", fontSize: "14px" }}
-            />
-        <input
-            type="number"
-            placeholder="Orden"
-            value={orderNumber}
-            onChange={(e) => setOrderNumber(Number(e.target.value))}
-            min={1}
-            style={{ padding: "8px", fontSize: "14px" }}
-            />
-        <input
-            type="number"
-            placeholder="Peso"
-            value={weight}
-            onChange={(e) => setWeight(Number(e.target.value))}
-            min={1}
-            style={{ padding: "8px", fontSize: "14px" }}
-            />
-        <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            style={{ padding: "8px", fontSize: "14px" }}
-            />
+            className="px-3 py-2 rounded-lg border border-border bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+           
+        <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col gap-1">
+                <label className="text-xs text-ink/60"> Orden </label>
+                <input
+                    type="number"
+                    value={orderNumber}
+                    onChange={(e) => setOrderNumber(Number(e.target.value))}
+                    min={1}
+                    className="px-3 py-2 rounded-lg border border-border bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+            </div>
 
-            {error && <p style={{ color: "red", fontSize: "13px"}}>{error}</p>}
-            <button type="submit" disabled={loading} style={{ padding: "8px", fontSize: "14px", cursor: "pointer" }}>
-                {loading ? "Añadiendo..." : "Añadir fase"}
-            </button>
+        <div className="flex flex-col gap-1">
+            <label className="text-xs text-ink/60"> Peso </label>
+            <input
+                type="number"
+                value={weight}
+                onChange={(e) => setWeight(Number(e.target.value))}
+                min={1}
+                className="px-3 py-2 rounded-lg border border-border bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+        </div>
+        </div>
+
+        <div className="flex flex-col gap-1">
+            <label className="text-xs text-ink/60"> Fecha límite </label>
+            <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="px-3 py-2 rounded-lg border border-border bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
+        </div>
+
+            {error && (
+                <p className="text-xs text-primary-dark bg-primary/10 rounded-lg px-3 py-2"> {error} </p>
+            )}
+
+            <button
+                type="submit"
+                disabled={loading}
+                className="mt-1 py-2.5 rounded-lg bg-primary text-paper text-sm font-medium hover:bg-primary-dark transition-colors disabled:opacity-60">
+                    {loading ? "Añadiendo..." : "Añadir fase"}
+                </button>
             </form>
-);
-}
+        );
+    }
