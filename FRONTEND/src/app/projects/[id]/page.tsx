@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import AddPhaseForm from "@/components/AddPhaseForm";
+import PhaseProgressControl from "@/components/PhaseProgressControl"; 
 
 interface Project {
     id: number;
@@ -124,6 +125,7 @@ export default async function ProjectDetailPage({
                                         <p className="text-xs text-ink/50 mt-1.5 font-mono">
                                         Peso {phase.weight} · {phase.dueDate ?? "sin fecha límite"}
                                         </p>
+                                        <PhaseProgressControl projectId={project.id} phase={phase} />
                                     </div>
                                </div>
                             );
