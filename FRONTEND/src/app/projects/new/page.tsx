@@ -79,17 +79,17 @@ export default function NewProjectPage() {
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-medium text-ink/70"> Fecha de inicio </label>
                 <input 
-                  type="data"
+                  type="date"
                   value={startDate}
                   onChange={(e) => setStartDate (e.target.value)}
                   required
                   className="px-3 py-2.5 rounded-lg border border-border bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"/>
               </div>
 
-              <div className="flex flex-cols-2 gap-1.5">
+              <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-ink/70"> Fecha de fin </label>
                 <input 
-                  type="data"
+                  type="date"
                   value={endDate}
                   onChange={(e) => setEndDate (e.target.value)}
                   required
