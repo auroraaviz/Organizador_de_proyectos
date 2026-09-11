@@ -11,7 +11,7 @@ interface Project {
     startDate: string | null;
     endDate: string | null;
     progress: number;
-    status?: string;
+    status?: "PLANNED" | "IN_PROGRESS" | "COMPLETED" | "DELAYED";
 } 
 
 interface Phase { 

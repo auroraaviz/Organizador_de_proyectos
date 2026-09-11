@@ -5,6 +5,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
 import jakarta.validation.constraints.*;
+import com.example.demo.model.ProjectStatus;
 
 @Getter
 @Setter
@@ -30,6 +31,8 @@ public class ProjectDTO {
     private LocalDate endDate;
 
     private Integer progress;
+
+    private ProjectStatus status;
 
     private List<PhaseDTO> phases;
 }

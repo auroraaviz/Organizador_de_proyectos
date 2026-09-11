@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/components/LogoutButton";
+import StatusBadge from "@/components/StatusBadge";
 import Link from "next/link";
 
 interface Project {
@@ -92,6 +93,10 @@ export default async function Home() {
                       className={`text-xs font-medium px-2 py-0.5 rounded-full whitespace-nowrap ${sizeStyles[project.size]} `}>
                         {sizeLabels[project.size]}
                       </span>
+                  </div>
+
+                  <div className="mt-2">
+                    <StatusBadge status={project.status} />
                   </div>
 
                   <div className="mt-5">

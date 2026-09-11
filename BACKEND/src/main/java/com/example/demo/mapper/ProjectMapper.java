@@ -17,6 +17,7 @@ public class ProjectMapper {
             .startDate(project.getStartDate())
             .endDate(project.getEndDate())
             .progress(project.getProgress())
+            .status(project.getStatus())
             .phases(
                     project.getPhases() == null ? null :
                     project.getPhases().stream()
